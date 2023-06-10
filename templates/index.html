@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Maya and Omer Date Questions</title>
+    <style>
+      /* CSS Styles */
+      body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+      }
+
+      h1,
+      h2 {
+        color: #333;
+      }
+
+      form {
+        margin-bottom: 20px;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 5px;
+      }
+
+      input[type="text"],
+      input[type="password"],
+      select {
+        width: 300px;
+        padding: 5px;
+        font-size: 16px;
+        margin-bottom: 10px;
+      }
+
+      input[type="submit"] {
+        padding: 10px 20px;
+        font-size: 16px;
+        background-color: #4caf50;
+        color: #fff;
+        border: none;
+        cursor: pointer;
+      }
+    </style>
+    <script>
+      // Function to handle login form submission
+      function login(event) {
+        event.preventDefault();
+
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+
+        // Construct the JSON payload
+        const payload = {
+          "username": username,
+          "password": password
+        };
+
+        // Send the payload to your login route
+        fetch('/api/login/', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(payload)
+        })
+          .then(response => {
+            // Handle the response
+            if (response.ok) {
+              // Login successful, perform further actions
+            } else {
+              alert('Login failed. Please try again.');
+            }
+          })
+          .catch(error => {
+            console.error('Error:', error);
+          });
+      }
+
+      // Function to handle add question form submission
+      function addQuestion(event) {
+        event.preventDefault();
+
+        const question = document.getElementById('question').value;
+        const category = document.getElementById('category').value;
+
+        // Construct the JSON payload
+        const payload = {
+          "text": question,
+          "category": category
+        };
+
+        // Send the payload to your add_question route
+        fetch('/api/questions/', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(payload)
+        })
+          .then(response => {
+            // Handle the response
+            if (response.ok) {
+              // Question added successfully, perform further actions
+            } else {
+              alert('Question addition failed. Please try again.');
+            }
+          })
+          .catch(error => {
+            console.error('Error:', error);
+          });
+      }
+
+      // Function to hide the login form if the hide_login flag is set to true
+      function hideLoginForm() {
+        const loginForm = document.getElementById('login-form');
+        const hideLogin = {{ hide_login|lower }};
+
+        if (hideLogin) {
+          loginForm.style.display = 'none';
+        }
+      }
+
+      // Function to hide the add question form if the hide_add_question flag is set to true
+      function hideAddQuestionForm() {
+        const addQuestionForm = document.getElementById('add-question-form');
+        const hideAddQuestion = {{ hide_add_question|lower }};
+
+        if (hideAddQuestion) {
+          addQuestionForm.style.display = 'none';
+        }
+      }
+
+      // Call the functions to hide the forms on page load
+      window.onload = function() {
+        hideLoginForm();
+        hideAddQuestionForm();
+      };
+    </script>
+  </head>
+  <body>
+    <h1>Maya and Omer Date Questions</h1>
+
+    <!-- Login Form -->
+    <form id="login-form" onsubmit="login(event)">
+      <label for="username">Username:</label>
+      <input type="text" id="username" name="username" required />
+      <br />
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password" required />
+      <br />
+      <button type="submit">Log in</button>
+    </form>
+
+    <!-- Add Question Form -->
+    <form id="add-question-form" onsubmit="addQuestion(event)">
+      <label for="question">Question:</label>
+      <input type="text" id="question" name="question" required />
+      <br />
+      <label for="category">Category:</label>
+      <select id="category" name="category">
+        {% for category in categories %}
+        <option value="{{ category }}">{{ category }}</option>
+        {% endfor %}
+      </select>
+      <br />
+      <button type="submit">Add Question</button>
+    </form>
+  </body>
+</html>
