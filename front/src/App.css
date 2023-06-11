@@ -1,0 +1,10 @@
+@import "https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&display=swap";
+
+*, input, select, button, textarea {
+font-family: 'Open Sans', sans-serif;
+direction: rtl;
+}
+
+.popup > div {
+    width: min(95%, 600px);
+}

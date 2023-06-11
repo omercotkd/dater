@@ -23,6 +23,7 @@ def login_required(request: Request, token: str = Depends(login_required_scheme)
 
 
 def guest_required(request: Request):
+    
     token = request.cookies.get(security.AUTH_COOKIE_NAME)
 
     if token:
@@ -30,5 +31,4 @@ def guest_required(request: Request):
         if token_data:
             raise HTTPException(status_code=401, detail="Already authenticated")
         else:
-            # TODO - remove the cookie
             pass

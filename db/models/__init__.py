@@ -4,15 +4,6 @@ import enum
 from typing import Optional
 
 
-class QuestionCategory(str, enum.Enum):
-    RELATIONSHIP = "relationship"
-    FUTURE = "future"
-    PERSONAL = "personal"
-    HOBBIES = "hobbies"
-    ENTERTAINMENT = "entertainment"
-    VALUES = "values"
-
-
 class Writers(str, enum.Enum):
     OMER = "omer"
     MAYA = "maya"
@@ -27,9 +18,9 @@ class Writers(str, enum.Enum):
 class Question(BaseModel):
     id: Optional[ObjectId] = Field(None, alias="_id")
     text: str = Field(...)
-    category: QuestionCategory = Field(...)
     writer: Writers = Field(...)
     answerd: bool = Field(False)
+    for_whom: str = Field(..., alias="forWhom")
 
     class Config:
         allow_population_by_field_name = True

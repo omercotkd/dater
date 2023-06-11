@@ -30,4 +30,9 @@ def login(
         max_age=60 * 60 * 24 * 7,
     )
 
+    res.body = {
+        "success": True,
+        "message": "Login successful",
+    }
+    
     return res
