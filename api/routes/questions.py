@@ -19,6 +19,7 @@ def create_question(
     request: Request,
     payload: QuestionPayload,
 ):
+    print(request.headers)
     question = Question(
         text=payload.text,
         category=payload.category,
